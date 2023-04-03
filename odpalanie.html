@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Szablony®</title>
+    <link rel="shortcut icon" href="https://cdn.discordapp.com/attachments/1020427836244361266/1066833184723050597/dc_szablony_awatar.jpg">
+    <link rel="stylesheet" href="styles/odpalanie.css">
+</head>
+<html>
+    <body>
+        <style>
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap&subset=latin-ext');
+
+            body {
+                background-color: #202020;
+                color: #fff;
+                font-family: Quicksand, sans-serif;
+            }
+            .container{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 5%;
+            }
+
+            .kolor {
+                color: red;
+            }
+
+            .tekst {
+                text-align: center;
+                font-size: 25px;
+                -webkit-animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+	        animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+            }
+        
+            @-webkit-keyframes tracking-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes tracking-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+            .link {
+                text-decoration: none;
+                font-weight: bold;
+                color:#fff;
+            }
+
+            .link:hover {
+                color: red;
+                transition: 1s;
+            }
+
+            .blok {
+                background-color: #00000027;
+                padding: 5% 5%;
+                border-radius: 25%;
+            }
+
+.general__buttons {
+  margin-top: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  flex-flow:wrap;
+  gap:20px;
+  color: #fff;
+}
+
+.btn {
+  padding: 12px 19px;
+  background-color: red;
+  border-radius: 20px;
+  font-weight: bold;
+  animation: pulse 2s ease infinite;
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn:hover {
+    background-color: rgb(161, 20, 20);
+    transition: 1s;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(255, 0, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 0 10px rgb(51, 140, 255, 0);
+  }
+}
+
+
+        </style>
+
+<div class="container">
+    <h1>
+        <span1 class="auto-type-text"></span1>
+    </h1>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+        <script>
+            let typed = new Typed(".auto-type-text", {
+    strings: ['Wybrany błąd <span style="color: red;">Odpalanie bota</span>'],
+    typeSpeed: 90,
+    backSpeed: 35,
+    loop: false
+})
+        </script>
+<div class="blok">
+<div class="tekst">
+    <p>Aby odpalić bota postępuj z krokami przedstawionymi poniżej
+    <br><br>
+    Pobierz pliki bota z serwera <a class="link" href="https://discord.gg/szablony-r-988496751063343115">Szablony</a> a następnie wypakuj na pulpit.
+    <br><br>
+    Następnie postępuj z krokami jakie są tam podane.
+    <br><br>
+    Gdy już uzupełniliśmy wszystkie pliki wejdź w <span style="color: red;">folder bota</span> i na pasku wpisz  <span style="color: red;">cmd</span>
+    <br>
+    <img src="https://cdn.discordapp.com/attachments/738471459789340695/1086768109387530310/image.png" alt="zdj.png" width="50%">
+    <br><br>
+    Po wejściu do <span style="color: red;">cmd</span> bota wpisz <span style="color: red;">node .</span> po wykonaniu tego  bot powinienem się odpalić. 
+</p>
+
+</div>
+</div>
+
+
+<div class="tekst">
+        <p>
+            
+        </p>
+    </div>
+    <section class="general">
+        <div class="general__wrapper">
+          <div class="general__content">
+          </div>
+          <div class="general__buttons">
+            <a href="bot" class="btn">
+              <span>Powrót</span>
+            </a>
+          
+
+    </body>
+</html>
