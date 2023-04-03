@@ -1,18 +1,10 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  "VOTEBAN"
 date:   2023-04-03 01:00:58 +0200
 categories: jekyll update
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
-
-Jekyll requires blog post files to be named according to the following format:
-
-`YEAR-MONTH-DAY-title.MARKUP`
-
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
-
-Jekyll also offers powerful support for code snippets:
+Mechanizm stosowany na discord, który pozwala użytkownikom na głosowanie w sprawie zbanowania innego użytkownika za łamanie zasad społeczności. Głosowanie może odbywać się w różny sposób, na przykład poprzez oddawanie głosów za pomocą przycisków "tak" lub "nie" lub za pomocą komentarzy. Gdy wystarczająca liczba użytkowników odda głosy za banem, to użytkownik łamiący zasady może zostać zbanowany na określony czas lub na stałe. Vote ban może pomóc w utrzymaniu porządku i bezpieczeństwa na platformie, ale wymaga odpowiedniego zarządzania i moderacji, aby uniknąć nadużyć i niesłusznych banów.
 
 {
   "name": "voteban",
@@ -37,8 +29,6 @@ Jekyll also offers powerful support for code snippets:
       "name": "Store Member Info"
     }
 
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+Reszta jest dostępna:
+[jekyll-voteban]: https://jekyllrb.com/docs/home
 
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
