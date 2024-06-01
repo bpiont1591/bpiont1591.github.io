@@ -2,9 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const { Client, Intents } = require('discord.js');
 const moment = require('moment');
+const path = require('path');
 
 const token = process.env.DISCORD_TOKEN;
 const guildId = process.env.DISCORD_GUILD_ID;
+
+if (!token) {
+  throw new Error('No DISCORD_TOKEN provided');
+}
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,7 +18,7 @@ const client = new Client({
   intents: [
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MEMBERS,
-    Intents.FLAGS.GUILD_MESSAGES, // Intencje potrzebne do monitorowania wiadomości
+    Intents.FLAGS.GUILD_MESSAGES,
   ]
 });
 
@@ -82,8 +87,8 @@ app.get('/api/new-members', async (req, res) => {
   }
 });
 
-// Serwowanie strony z liczbą członków, ról, wiadomości, aktywnych użytkowników i nowych użytkowników
-app.use(express.static('public'));
+// Serwowanie plików statycznych z katalogu public
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Obsługa błędów 404
 app.use((req, res, next) => {
@@ -96,7 +101,9 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-client.login(token);
+client.login(token).catch(error => {
+  console.error('Błąd przy logowaniu do Discorda:', error);
+});
 
 app.listen(port, () => {
   console.log(`Serwer działa na porcie ${port}`);
