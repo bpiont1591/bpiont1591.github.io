@@ -1,50 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Statystyki serwera</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Stats</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <h1>Statystyki serwera</h1>
-  <div id="stats">Ładowanie...</div>
-  <div id="new-members">Ładowanie nowych użytkowników...</div>
-  <script>
-    async function fetchStats() {
-      try {
-        const [statsResponse, activeMembersResponse, newMembersResponse] = await Promise.all([
-          fetch('/api/stats'),
-          fetch('/api/active-members'),
-          fetch('/api/new-members')
-        ]);
-        const statsText = await statsResponse.text();
-        const activeMembersText = await activeMembersResponse.text();
-        const newMembersText = await newMembersResponse.text();
-
-        console.log('statsResponse:', statsText); // Dodane logowanie odpowiedzi
-        console.log('activeMembersResponse:', activeMembersText); // Dodane logowanie odpowiedzi
-        console.log('newMembersResponse:', newMembersText); // Dodane logowanie odpowiedzi
-
-        const stats = JSON.parse(statsText);
-        const activeMembers = JSON.parse(activeMembersText);
-        const newMembers = JSON.parse(newMembersText);
-
-        document.getElementById('stats').innerHTML = `
-          <p>Liczba członków: \${stats.memberCount}</p>
-          <p>Liczba ról: \${stats.rolesCount}</p>
-          <p>Liczba wiadomości w ciągu ostatniego dnia: \${stats.messagesCount}</p>
-          <p>Liczba aktywnych użytkowników: \${activeMembers.onlineMembers}</p>
-        `;
-        document.getElementById('new-members').innerHTML = `
-          <h2>Nowi użytkownicy (ostatni tydzień)</h2>
-          <ul>\${newMembers.newMembersList.map(member => \`<li>\${member}</li>\`).join('')}</ul>
-        `;
-      } catch (error) {
-        console.error('Błąd przy pobieraniu statystyk:', error);
-        document.getElementById('stats').innerText = 'Wystąpił błąd.';
-        document.getElementById('new-members').innerText = 'Wystąpił błąd przy pobieraniu nowych użytkowników.';
-      }
-    }
-    fetchStats();
-  </script>
+  <div class="container mt-5">
+    <div class="text-center mb-4">
+      <h1>Server Stats</h1>
+    </div>
+    <div id="stats" class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title">Statystyki serwera</h2>
+        <p>Loading...</p>
+      </div>
+    </div>
+    <div id="new-members" class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title">Nowi użytkownicy (ostatni tydzień)</h2>
+        <p>Loading new members...</p>
+      </div>
+    </div>
+    <div id="top10poziom" class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title">Top 10 użytkowników z najwyższym poziomem</h2>
+        <p>Loading top 10 levels...</p>
+      </div>
+    </div>
+    <div id="top10invite" class="card">
+      <div class="card-body">
+        <h2 class="card-title">Top 10 zapraszających użytkowników</h2>
+        <p>Loading top 10 inviters...</p>
+      </div>
+    </div>
+  </div>
+  <script src="/script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
 
