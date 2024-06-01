@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const serverless = require('serverless-http');
 const { Client, Intents } = require('discord.js');
 const moment = require('moment');
 const path = require('path');
@@ -12,7 +13,6 @@ if (!token) {
 }
 
 const app = express();
-const port = process.env.PORT || 3000;
 
 const client = new Client({
   intents: [
@@ -34,7 +34,7 @@ client.once('ready', () => {
 });
 
 // Endpoint API do pobierania liczby członków, ról i wiadomości
-app.get('/api/stats', async (req, res) => {
+app.get('/.netlify/functions/server/api/stats', async (req, res) => {
   try {
     const guild = await client.guilds.fetch(guildId);
     const memberCount = guild.memberCount;
@@ -60,7 +60,7 @@ app.get('/api/stats', async (req, res) => {
 });
 
 // Endpoint API do pobierania liczby aktywnych użytkowników
-app.get('/api/active-members', async (req, res) => {
+app.get('/.netlify/functions/server/api/active-members', async (req, res) => {
   try {
     const guild = await client.guilds.fetch(guildId);
     const onlineMembers = guild.members.cache.filter(member => member.presence?.status === 'online').size;
@@ -73,7 +73,7 @@ app.get('/api/active-members', async (req, res) => {
 });
 
 // Endpoint API do pobierania listy nowych użytkowników
-app.get('/api/new-members', async (req, res) => {
+app.get('/.netlify/functions/server/api/new-members', async (req, res) => {
   try {
     const guild = await client.guilds.fetch(guildId);
     const oneWeekAgo = moment().subtract(7, 'days');
@@ -87,24 +87,8 @@ app.get('/api/new-members', async (req, res) => {
   }
 });
 
-// Serwowanie plików statycznych z katalogu public
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Obsługa błędów 404
-app.use((req, res, next) => {
-  res.status(404).send('Sorry, we cannot find that!');
-});
-
-// Obsługa błędów 500
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
-
 client.login(token).catch(error => {
   console.error('Błąd przy logowaniu do Discorda:', error);
 });
 
-app.listen(port, () => {
-  console.log(`Serwer działa na porcie ${port}`);
-});
+module.exports.handler = serverless(app);
