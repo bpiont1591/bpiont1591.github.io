@@ -82,57 +82,17 @@ app.get('/api/new-members', async (req, res) => {
 });
 
 // Serwowanie strony z liczbą członków, ról, wiadomości, aktywnych użytkowników i nowych użytkowników
-app.get('/', (req, res) => {
-  res.send(`
-    <html>
-      <head>
-        <title>Statystyki serwera</title>
-      </head>
-      <body>
-        <h1>Statystyki serwera</h1>
-        <div id="stats">Ładowanie...</div>
-        <div id="new-members">Ładowanie nowych użytkowników...</div>
-        <script>
-          async function fetchStats() {
-            try {
-              const [statsResponse, activeMembersResponse, newMembersResponse] = await Promise.all([
-                fetch('/api/stats'),
-                fetch('/api/active-members'),
-                fetch('/api/new-members')
-              ]);
-              const statsText = await statsResponse.text();
-              const activeMembersText = await activeMembersResponse.text();
-              const newMembersText = await newMembersResponse.text();
+app.use(express.static('public'));
 
-              console.log('statsResponse:', statsText); // Dodane logowanie odpowiedzi
-              console.log('activeMembersResponse:', activeMembersText); // Dodane logowanie odpowiedzi
-              console.log('newMembersResponse:', newMembersText); // Dodane logowanie odpowiedzi
+// Obsługa błędów 404
+app.use((req, res, next) => {
+  res.status(404).send('Sorry, we cannot find that!');
+});
 
-              const stats = JSON.parse(statsText);
-              const activeMembers = JSON.parse(activeMembersText);
-              const newMembers = JSON.parse(newMembersText);
-
-              document.getElementById('stats').innerHTML = `
-                <p>Liczba członków: \${stats.memberCount}</p>
-                <p>Liczba ról: \${stats.rolesCount}</p>
-                <p>Liczba wiadomości w ciągu ostatniego dnia: \${stats.messagesCount}</p>
-                <p>Liczba aktywnych użytkowników: \${activeMembers.onlineMembers}</p>
-              `;
-              document.getElementById('new-members').innerHTML = `
-                <h2>Nowi użytkownicy (ostatni tydzień)</h2>
-                <ul>\${newMembers.newMembersList.map(member => \`<li>\${member}</li>\`).join('')}</ul>
-              `;
-            } catch (error) {
-              console.error('Błąd przy pobieraniu statystyk:', error);
-              document.getElementById('stats').innerText = 'Wystąpił błąd.';
-              document.getElementById('new-members').innerText = 'Wystąpił błąd przy pobieraniu nowych użytkowników.';
-            }
-          }
-          fetchStats();
-        </script>
-      </body>
-    </html>
-  `);
+// Obsługa błędów 500
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 client.login(token);
@@ -140,4 +100,3 @@ client.login(token);
 app.listen(port, () => {
   console.log(`Serwer działa na porcie ${port}`);
 });
-
