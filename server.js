@@ -44,6 +44,7 @@ app.get('/api/stats', async (req, res) => {
       messagesCount += messages.filter(msg => moment(msg.createdAt).isAfter(oneDayAgo)).size;
     }
 
+    console.log('Stats:', { memberCount, rolesCount, messagesCount });
     res.json({ memberCount, rolesCount, messagesCount });
   } catch (error) {
     console.error('Błąd przy pobieraniu statystyk:', error);
@@ -56,6 +57,7 @@ app.get('/api/active-members', async (req, res) => {
   try {
     const guild = await client.guilds.fetch(config.guildId);
     const onlineMembers = guild.members.cache.filter(member => member.presence?.status === 'online').size;
+    console.log('Active Members:', { onlineMembers });
     res.json({ onlineMembers });
   } catch (error) {
     console.error('Błąd przy pobieraniu liczby aktywnych użytkowników:', error);
@@ -70,6 +72,7 @@ app.get('/api/new-members', async (req, res) => {
     const oneWeekAgo = moment().subtract(7, 'days');
     const newMembers = guild.members.cache.filter(member => moment(member.joinedAt).isAfter(oneWeekAgo));
     const newMembersList = newMembers.map(member => member.user.tag);
+    console.log('New Members:', { newMembersList });
     res.json({ newMembersList });
   } catch (error) {
     console.error('Błąd przy pobieraniu nowych użytkowników:', error);
@@ -136,4 +139,5 @@ client.login(token);
 app.listen(port, () => {
   console.log(`Serwer działa na porcie ${port}`);
 });
+
 
