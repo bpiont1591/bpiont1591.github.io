@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const { Client, Intents } = require('discord.js');
 const moment = require('moment');
