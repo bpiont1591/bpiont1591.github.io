@@ -1,11 +1,12 @@
 const express = require('express');
 const { Client, Intents } = require('discord.js');
 const moment = require('moment');
-const config = require('./config.js');
-const token = config.token;
+
+const token = process.env.DISCORD_TOKEN;
+const guildId = process.env.DISCORD_GUILD_ID;
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const client = new Client({
   intents: [
@@ -18,10 +19,10 @@ const client = new Client({
 client.once('ready', () => {
   console.log('Bot jest online!');
   client.user.setPresence({
-    status: config.status,
+    status: 'available',
     activities: [{
-      name: config.activity.name,
-      type: config.activity.type,
+      name: 'TEAMWORK ALFA',
+      type: 'WATCHING',
     }],
   });
 });
@@ -29,7 +30,7 @@ client.once('ready', () => {
 // Endpoint API do pobierania liczby członków, ról i wiadomości
 app.get('/api/stats', async (req, res) => {
   try {
-    const guild = await client.guilds.fetch(config.guildId);
+    const guild = await client.guilds.fetch(guildId);
     const memberCount = guild.memberCount;
     const rolesCount = guild.roles.cache.size;
 
@@ -55,7 +56,7 @@ app.get('/api/stats', async (req, res) => {
 // Endpoint API do pobierania liczby aktywnych użytkowników
 app.get('/api/active-members', async (req, res) => {
   try {
-    const guild = await client.guilds.fetch(config.guildId);
+    const guild = await client.guilds.fetch(guildId);
     const onlineMembers = guild.members.cache.filter(member => member.presence?.status === 'online').size;
     console.log('Active Members:', { onlineMembers });
     res.json({ onlineMembers });
@@ -68,7 +69,7 @@ app.get('/api/active-members', async (req, res) => {
 // Endpoint API do pobierania listy nowych użytkowników
 app.get('/api/new-members', async (req, res) => {
   try {
-    const guild = await client.guilds.fetch(config.guildId);
+    const guild = await client.guilds.fetch(guildId);
     const oneWeekAgo = moment().subtract(7, 'days');
     const newMembers = guild.members.cache.filter(member => moment(member.joinedAt).isAfter(oneWeekAgo));
     const newMembersList = newMembers.map(member => member.user.tag);
@@ -111,16 +112,16 @@ app.get('/', (req, res) => {
               const activeMembers = JSON.parse(activeMembersText);
               const newMembers = JSON.parse(newMembersText);
 
-              document.getElementById('stats').innerHTML = \`
+              document.getElementById('stats').innerHTML = `
                 <p>Liczba członków: \${stats.memberCount}</p>
                 <p>Liczba ról: \${stats.rolesCount}</p>
                 <p>Liczba wiadomości w ciągu ostatniego dnia: \${stats.messagesCount}</p>
                 <p>Liczba aktywnych użytkowników: \${activeMembers.onlineMembers}</p>
-              \`;
-              document.getElementById('new-members').innerHTML = \`
+              `;
+              document.getElementById('new-members').innerHTML = `
                 <h2>Nowi użytkownicy (ostatni tydzień)</h2>
                 <ul>\${newMembers.newMembersList.map(member => \`<li>\${member}</li>\`).join('')}</ul>
-              \`;
+              `;
             } catch (error) {
               console.error('Błąd przy pobieraniu statystyk:', error);
               document.getElementById('stats').innerText = 'Wystąpił błąd.';
